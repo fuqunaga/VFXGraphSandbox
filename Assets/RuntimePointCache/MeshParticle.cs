@@ -1,33 +1,27 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.VFX;
 
 [ExecuteAlways]
 public class MeshParticle : MonoBehaviour
 {
-    public static class PropName
-    {
-        public const string PositionMap = "PositionMap";
-        public const string UVMap = "UVMap";
-        public const string NormalMap = "NormalMap";
-        public const string ModelMainTex = "ModelMainTex";
-        public const string VtxCount = "VtxCount";
-
-    }
-
+    public MeshParticleUnit unitPrefab;
     public GameObject model;
-    public VisualEffect effect;
+
 
     public bool startEffect;
 
     public float pointCountPerArea = 10000f;
     public float modelDiableDelay = 0.5f;
     public float modelEnableDelay = 9f;
+    public float animEnableDelay = 1f;
     public float effectDiableDelay = 10f;
 
+    List<MeshParticleUnit> units = new List<MeshParticleUnit>();
+    Animator pausedAnim;
 
-    MapSet mapSet;
-    Texture modelMainTex;
+    public bool autoDestroy;
 
     private void Update()
     {
@@ -36,25 +30,14 @@ public class MeshParticle : MonoBehaviour
 
     private void UpdateEffect()
     {
-        var effectGo = effect.gameObject;
-        if (startEffect && effectGo.activeSelf == false)
+        if (startEffect && units.Any() == false)
         {
             InitEffect();
 
             StartCoroutine(StartEffectAtiveSequence());
             StartCoroutine(StartTargetActiveSequence());
         }
-
-        if (startEffect && mapSet != null)
-        {
-            effect.SetTexture(PropName.PositionMap, mapSet.position);
-            effect.SetTexture(PropName.UVMap, mapSet.uv);
-            effect.SetTexture(PropName.NormalMap, mapSet.normal);
-            effect.SetTexture(PropName.ModelMainTex, modelMainTex);
-            effect.SetInt(PropName.VtxCount, mapSet.vtxCount);
-        }
     }
-
 
     IEnumerator StartTargetActiveSequence()
     {
@@ -65,53 +48,75 @@ public class MeshParticle : MonoBehaviour
         yield return new WaitForSeconds(modelEnableDelay - modelDiableDelay);
 
         model.SetActive(true);
+
+        if (pausedAnim != null)
+        {
+            yield return new WaitForSeconds(animEnableDelay);
+            pausedAnim.enabled = true;
+            pausedAnim = null;
+        }
+
+
+        if (autoDestroy) Destroy(gameObject);
     }
 
     IEnumerator StartEffectAtiveSequence()
     {
-        var effectGo = effect.gameObject;
-        effectGo.SetActive(startEffect);
-
         yield return new WaitForSeconds(effectDiableDelay);
 
-        effectGo.SetActive(false);
+        units.ForEach(unit => Destroy(unit.gameObject));
+        units.Clear();
 
         startEffect = false;
     }
 
+
     private void InitEffect()
     {
-        var (mesh, tex, normal) = GetMeshData();
-        modelMainTex = tex;
-        mapSet = MeshToMap.ComputeMap(mesh, pointCountPerArea);
-
         var modelTrans = model.transform;
         transform.SetPositionAndRotation(modelTrans.position, modelTrans.rotation);
+
+        var meshAndTexs = GetMeshData();
+
+        foreach (var (mesh, tex) in meshAndTexs)
+        {
+            var unit = Instantiate(unitPrefab);
+            unit.transform.SetParent(transform, false);
+
+            unit.mapSet = MeshToMap.ComputeMap(mesh, pointCountPerArea);
+            unit.modelMainTex = tex;
+
+            units.Add(unit);
+        }
     }
 
-    (Mesh, Texture, Texture) GetMeshData()
-    {
-        Mesh mesh = null;
-        Material material = null;
 
+    IEnumerable<(Mesh, Texture)> GetMeshData()
+    {
         var smr = model.GetComponentInChildren<SkinnedMeshRenderer>();
         if (smr != null)
         {
-            material = smr.sharedMaterial;
+            // stop animation
+            pausedAnim = model.GetComponentInParent<Animator>();
+            pausedAnim.enabled = false;
 
-            mesh = new Mesh();
+            var material = smr.sharedMaterial;
+
+            var mesh = new Mesh();
             smr.BakeMesh(mesh);
+
+            return new[] { (mesh, material.mainTexture) };
         }
         else
         {
             var mf = model.GetComponentInChildren<MeshFilter>();
             var renderer = model.GetComponentInChildren<Renderer>();
-            mesh = mf.sharedMesh;
-            material = renderer?.sharedMaterial;
+
+            var mesh = mf.sharedMesh;
+            var meshCount = mesh.subMeshCount;
+            var materials = renderer.sharedMaterials; ;
+
+            return new[] { (mesh, materials.First().mainTexture) };
         }
-
-
-        return (mesh, material.mainTexture, material.GetTexture("_NormalMap"));
-
     }
 }
