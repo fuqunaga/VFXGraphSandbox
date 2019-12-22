@@ -1,0 +1,11 @@
+{
+	SubShader
+	{
+		${VFXInclude("../../Assets/VATExtension/Templates/Shaders/VFXParticleHeader.template")}
+		${VFXInclude("../../Assets/VATExtension/Templates/Shaders/ParticleMeshes/PassSelection.template")}
+		${VFXInclude("../../Assets/VATExtension/Templates/Shaders/ParticleMeshes/PassDepth.template"),IS_OPAQUE_PARTICLE}
+		${VFXInclude("../../Assets/VATExtension/Templates/Shaders/ParticleMeshes/PassVelocity.template"),USE_MOTION_VECTORS_PASS}
+		${VFXInclude("../../Assets/VATExtension/Templates/Shaders/ParticleMeshes/PassForward.template")}
+		${VFXInclude("../../Assets/VATExtension/Templates/Shaders/ParticleMeshes/PassShadowCaster.template"),USE_CAST_SHADOWS_PASS}
+	}
+}
