@@ -17,11 +17,11 @@ public class MeshParticle : MonoBehaviour
     public float modelEnableDelay = 9f;
     public float animEnableDelay = 1f;
     public float effectDiableDelay = 10f;
+    public float autoDestroyDelay = 10f;
 
     List<MeshParticleUnit> units = new List<MeshParticleUnit>();
     Animator pausedAnim;
 
-    public bool autoDestroy;
 
     private void Update()
     {
@@ -36,6 +36,7 @@ public class MeshParticle : MonoBehaviour
 
             StartCoroutine(StartEffectAtiveSequence());
             StartCoroutine(StartTargetActiveSequence());
+            Destroy(gameObject, autoDestroyDelay);
         }
     }
 
@@ -45,7 +46,7 @@ public class MeshParticle : MonoBehaviour
 
         model.SetActive(false);
 
-        yield return new WaitForSeconds(modelEnableDelay - modelDiableDelay);
+        yield return new WaitForSeconds(modelEnableDelay);
 
         model.SetActive(true);
 
@@ -55,9 +56,6 @@ public class MeshParticle : MonoBehaviour
             pausedAnim.enabled = true;
             pausedAnim = null;
         }
-
-
-        if (autoDestroy) Destroy(gameObject);
     }
 
     IEnumerator StartEffectAtiveSequence()

@@ -49,5 +49,7 @@ MonoBehaviour:
   startEffect: 0
   pointCountPerArea: 100000
   modelDiableDelay: 1
-  modelEnableDelay: 7
+  modelEnableDelay: 6
+  animEnableDelay: 1
   effectDiableDelay: 8
+  autoDestroy: 1
