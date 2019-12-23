@@ -5,7 +5,7 @@ using UnityEngine;
 namespace UnityEditor.VFX
 {
     [VFXInfo]
-    class VFXMeshOutput : VFXShaderGraphParticleOutput
+    class VFXVatOutput : VFXShaderGraphParticleOutput
     {
         public override string name { get { return "Output Particle VAT"; } }
         public override string codeGeneratorTemplate { get { return "Assets/VATExtension/Templates/VFXParticleMeshes"; } }
