@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.VFX.Block;
 using UnityEngine;
-using UnityEngine.VFX;
 
 namespace UnityEditor.VFX
 {
@@ -48,10 +46,12 @@ namespace UnityEditor.VFX
         {
             foreach (var exp in base.CollectGPUExpressions(slotExpressions))
                 yield return exp;
-            if( shaderGraph == null)
+            if (shaderGraph == null)
+            {
                 yield return slotExpressions.First(o => o.name == "mainTexture");
-            yield return slotExpressions.First(o => o.name == "vertexAnimTexture");
-            yield return slotExpressions.First(o => o.name == "animTime");
+                yield return slotExpressions.First(o => o.name == "vertexAnimTexture");
+                yield return slotExpressions.First(o => o.name == "animTime");
+            }
         }
 
         protected override IEnumerable<VFXPropertyWithValue> inputProperties
@@ -72,7 +72,7 @@ namespace UnityEditor.VFX
             public Texture2D mainTexture = VFXResources.defaultResources.particleTexture;
 
             public Texture2D vertexAnimTexture = VFXResources.defaultResources.particleTexture;
-            public float animTime;
+            public float animTime = 0f;
         }
         public class InputProperties
         {
