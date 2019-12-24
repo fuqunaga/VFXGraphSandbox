@@ -24,7 +24,7 @@ RenderSettings:
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
-  m_AmbientMode: 0
+  m_AmbientMode: 4
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2035111234}
-  m_IndirectSpecularColor: {r: 8.198034, g: 10.157814, b: 13.444361, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -234,7 +234,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Profile: {fileID: 11400000, guid: a123fc0ac58cb774e8592c925f167e7c, type: 2}
   m_StaticLightingSkyUniqueID: 1
-  m_SkySettings: {fileID: 2066495453}
+  m_SkySettings: {fileID: 2073631427}
   m_SkySettingsFromProfile: {fileID: -1658960478407648048, guid: a123fc0ac58cb774e8592c925f167e7c,
     type: 2}
 --- !u!4 &313761475
@@ -768,6 +768,16 @@ PrefabInstance:
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[6].m_Overridden
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6221355203010577991, guid: fa8298296e35e3e4d8d68e02edd2bcfa,
+        type: 3}
+      propertyPath: m_ResetSeedOnPlay
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6221355203010577991, guid: fa8298296e35e3e4d8d68e02edd2bcfa,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6221355203010578008, guid: fa8298296e35e3e4d8d68e02edd2bcfa,
         type: 3}
       propertyPath: m_Materials.Array.size
@@ -778,10 +788,20 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 6221355203010578008, guid: fa8298296e35e3e4d8d68e02edd2bcfa,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6221355203010578009, guid: fa8298296e35e3e4d8d68e02edd2bcfa,
         type: 3}
       propertyPath: m_Name
       value: VfxVAT
+      objectReference: {fileID: 0}
+    - target: {fileID: 6221355203010578009, guid: fa8298296e35e3e4d8d68e02edd2bcfa,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fa8298296e35e3e4d8d68e02edd2bcfa, type: 3}
@@ -826,9 +846,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ExecuteInEditor: 1
   m_Bindings:
-  - {fileID: 906670482}
-  - {fileID: 906670484}
   - {fileID: 906670485}
+  - {fileID: 906670484}
+  - {fileID: 906670482}
   m_VisualEffect: {fileID: 906670481}
 --- !u!114 &906670484
 MonoBehaviour:
@@ -1086,7 +1106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297650280}
   m_LocalRotation: {x: -0.153546, y: 0.8371425, z: -0.2968923, w: -0.43297932}
-  m_LocalPosition: {x: 20.093834, y: 17.634079, z: 54.472645}
+  m_LocalPosition: {x: 11.76, y: 1.5, z: 29.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1477,7 +1497,7 @@ MonoBehaviour:
   useVolumetric: 1
   featuresFoldout: 1
   showAdditionalSettings: 4
---- !u!114 &2066495453
+--- !u!114 &2073631427
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
