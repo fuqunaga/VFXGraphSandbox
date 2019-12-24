@@ -18,4 +18,4 @@ https://note.com/fuqunaga/n/n8095638b6b14
 
 # License
 
-[MIT](LISENCE)
+[MIT](LICENSE)
