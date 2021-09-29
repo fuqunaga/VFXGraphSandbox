@@ -16,6 +16,10 @@ VFX Graph technical experiment.
 
 https://note.com/fuqunaga/n/n8095638b6b14
 
+# Models
+- Space Robot Kyle https://assetstore.unity.com/packages/3d/characters/robots/space-robot-kyle-4696
+- Sushi https://ddd.pink/product/j-food04/
+
 # License
 
 [MIT](LICENSE)
